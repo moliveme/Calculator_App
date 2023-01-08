@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        1. JS is for adding interactivity to HTML and CSS.
+        2. simply add code inside the <script></script> tags to indicate JS usage
+        3. so JS can also be added in a html file internally (i.e. within the body)
+        4. or externally 
+        5. JS also has variables like strings, ints, booleans, etc. 
+        6. if statements supported by JS, loops too
+        7. can put variables into the html file that calls the js file that the code
+        is written in. eg: document.getElementById('box').innerHTML = number + 5; will output 15 
+        on the browser page (if number = 10).
+        8. fucntions in js
+        9. event listeners in js
+        **** points 4+ are included as code in .js files only :)
+    -->
+
+    <div id="box"> a box </div>
+    <!--
+        3. internal scripts, the code below prints "test inspect" to the console in inspect
+    -->
+    <script>
+        console.log("test inspect");
+    </script>
+
+    <!--
+        4. external scripts, the code below prints "test inspect" to the console in inspect
+    -->
+    <script src="./index.js"></script>
+</body>
+</html>

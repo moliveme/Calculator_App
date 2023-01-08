@@ -277,7 +277,7 @@ function go() {
     operationStackInfix = []
 
     operationStackInfix.push(operationStackPostfix[0])
-    
+
     operationStackPostfix.forEach((el) => {
 
         if (isNaN(el)) {
@@ -316,7 +316,7 @@ function updateDisplay() {
 
             if (isNaN(el)) {
         
-                displayText = "Type a valid expression!"
+                displayText = "Give me something nicer UwU!"
         
             }
 

@@ -122,8 +122,96 @@ function go() {
         "-": 1
     };
 
-    // 3. convert infix notation to postfix
+    // 3. convert infix notation to postfix, meanwhile evaluating expn
 
+    let currentEl
+
+    for (let i = 0; i < operationStackInfix.length; i++) {
+
+        // 3.1 if number, add to postfix stack
+
+        currentEl = operationStackInfix[i]
+
+        if (typeof currentEl === "number") {
+            operationStackPostfix.push(currentEl)
+
+        // 3.1 ...else, add to operators stack/evaluate
+        } else {
+
+            // 3.1.2 if currentEl is first operator to go on stack
+            if (tempOperatorsStack.length === 0) {
+                tempOperatorsStack[0] = currentEl
+
+            // 3.1.2 else    
+            } else {
+
+                let tempOperator = ""
+                let num1, num2, result
+
+                while (true) {
+
+                    prevOperator = tempOperatorsStack[tempOperatorsStack.length - 1]
+                    if (precedenceDict[currentEl] > precedenceDict[prevOperator]) {
+                        tempOperatorsStack.push(currentEl)
+                        break
+                    } 
+
+                    tempOperator = tempOperatorsStack.pop()
+
+                    // pop last two numbers, operate on them using tempOperator,
+                    num1 = operationStackPostfix.pop()
+                    num2 = operationStackPostfix.pop()
+
+                    if (tempOperator === "+") {
+                        result = num2 + num1
+                    } else if (tempOperator === "-") {
+                        result = num2 - num1
+                    } else if (tempOperator === "x") {
+                        result = num2 * num1
+                    } else if (tempOperator === "%") {
+                        result = num2 / num1
+                    }
+
+                    // push result onto postfix stack
+                    operationStackPostfix.push(result)
+                    
+                }
+
+            }
+
+        }
+
+        console.log(operationStackPostfix)
+        console.log(tempOperatorsStack)
+
+    }
+
+    // for remaining operators in tempOp stack
+
+    for (let i = 0; i < tempOperatorsStack.length; i++) {
+
+        tempOperator = tempOperatorsStack.pop()
+
+        // pop last two numbers, operate on them using tempOperator,
+        num1 = operationStackPostfix.pop()
+        num2 = operationStackPostfix.pop()
+
+        if (tempOperator === "+") {
+            result = num2 + num1
+        } else if (tempOperator === "-") {
+            result = num2 - num1
+        } else if (tempOperator === "x") {
+            result = num2 * num1
+        } else if (tempOperator === "%") {
+            result = num2 / num1
+        }
+
+        // push result onto postfix stack
+        operationStackPostfix.push(result)
+
+    }
+
+    console.log("result: " + operationStackPostfix)
 
 }    
 

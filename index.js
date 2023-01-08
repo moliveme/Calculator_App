@@ -316,7 +316,7 @@ function updateDisplay() {
 
             if (isNaN(el)) {
         
-                displayText = "Give me something nicer UwU!"
+                displayText = "Give me something nicer UwU"
         
             }
 

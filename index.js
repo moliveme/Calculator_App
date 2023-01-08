@@ -125,7 +125,7 @@ function go() {
     for (let i = 1; i < operationStackInfix.length; i++) {
 
         if ("-+".includes(operationStackInfix[i]) 
-        && "x%".includes(operationStackInfix[i - 1])) {
+        && "-+x%".includes(operationStackInfix[i - 1])) {
 
             newEl = operationStackInfix[i] + operationStackInfix[i + 1]
 
@@ -133,7 +133,7 @@ function go() {
 
                 if (i === j) {
                     tempOperationStackInfix.push(newEl)
-                    
+
                 } else if (j === i + 1) {
                     continue
 

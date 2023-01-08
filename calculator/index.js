@@ -1,98 +1,147 @@
-let operationStack = []
+let operationStackInfix = []
 
 let displayText = ""
+
+let tempOperatorsStack = []
+let operationStackPostfix = []
 
 // need more info to do this :(
 
 function zero() {
-    operationStack.push(0)
+    operationStackInfix.push(0)
     updateDisplay()
-    console.log(operationStack)
+    console.log(operationStackInfix)
 }
 
 function one() {
-    operationStack.push(1)
+    operationStackInfix.push(1)
     updateDisplay()
 }
 
 function two() {
-    operationStack.push(2)
+    operationStackInfix.push(2)
     updateDisplay()
 }
 
 function three() {
-    operationStack.push(3)
+    operationStackInfix.push(3)
     updateDisplay()
 }
 
 function four() {
-    operationStack.push(4)
+    operationStackInfix.push(4)
     updateDisplay()
 }
 
 function five() {
-    operationStack.push(5)
+    operationStackInfix.push(5)
     updateDisplay()
 }
 
 function six() {
-    operationStack.push(6)
+    operationStackInfix.push(6)
     updateDisplay()
 }
 
 function seven() {
-    operationStack.push(7)
+    operationStackInfix.push(7)
     updateDisplay()
 }
 
 function eight() {
-    operationStack.push(8)
+    operationStackInfix.push(8)
     updateDisplay()
 }
 
 function nine() {
-    operationStack.push(9)
+    operationStackInfix.push(9)
     updateDisplay()
 }
 
 function add() {
-    operationStack.push("+")
+    operationStackInfix.push("+")
     updateDisplay()
 }
 
 function subtract() {
-    operationStack.push("-")
+    operationStackInfix.push("-")
     updateDisplay()
 }
 
 function multiply() {
-    operationStack.push("x")
+    operationStackInfix.push("x")
     updateDisplay()
 }
 
 function divide() {
-    operationStack.push("%")
+    operationStackInfix.push("%")
     updateDisplay()
 }
 
 function go() {
-    // assuming only single digit values
+    
+    // 1. handle numbers that have more than 1 digit
 
-    // figure RPN
+    // 1.1 stringify infix stack
+    console.log(operationStackInfix)
+
+    for (let i = 0; i < operationStackInfix.length; i++) {
+
+        operationStackInfix[i] = operationStackInfix[i].toString()
+
+    }
+
+    displayText = operationStackInfix.reduce((a, b) => (a + b + ""))
+    console.log(displayText)
+
+    // 1.2 create regex to split by operators, update infix stack
+    var expr = new RegExp("(?<=[-+x%])|(?=[-+x%])")  
+    operationStackInfix = displayText.split(expr)
+    console.log(operationStackInfix)
+
+    // 1.3 convert type string numbers to type number numbers
+
+    let operationsStr = "-+x%"
+
+    for (let i = 0; i < operationStackInfix.length; i++) {
+
+        if (!operationsStr.includes(operationStackInfix[i])) {
+
+            operationStackInfix[i] = +operationStackInfix[i]
+
+        }
+
+    }
+    console.log(operationStackInfix)
+
+    // 2. assign precedence to operators using dictionary
+    var precedenceDict = {
+        "x": 2,
+        "%": 2,
+        "+": 1,
+        "-": 1
+    };
+
+    // 3. convert infix notation to postfix
+
 
 }    
 
 function backspace() {
-    operationStack.pop()
+    operationStackInfix.pop()
     updateDisplay()
 }
 
 function updateDisplay() {
      
-    if (operationStack.length > 0) {
-        displayText = operationStack.reduce((a, b) => (a + " " + b + " "))
+    if (operationStackInfix.length > 0) {
+
+        displayText = operationStackInfix.reduce((a, b) => (a + " " + b + " "))
+
     } else {
+
         displayText = ""
+
     }
     
     document.getElementById("display").innerText = displayText

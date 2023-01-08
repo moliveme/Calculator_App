@@ -1,7 +1,3 @@
-body {
-    background-color:rgb(117, 67, 48);
-}
-
 #btns-row {
     display: flex;
     flex-direction: row;

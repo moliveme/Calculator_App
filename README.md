@@ -1,3 +1,3 @@
 # Calculator_App
 
-Download repository as a folder and run calculator/index.html in browser
+Deployed at https://badcalculator.netlify.app/

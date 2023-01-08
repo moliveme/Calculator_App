@@ -99,7 +99,7 @@ function go() {
     operationStackInfix = displayText.split(expr)
     console.log(operationStackInfix)
 
-    // 1.3 convert type string numbers to type number numbers
+    // 1.3 convert all type string numbers to type number numbers
 
     let operationsStr = "-+x%"
 

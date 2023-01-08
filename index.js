@@ -5,12 +5,13 @@ let displayText = ""
 let tempOperatorsStack = []
 let operationStackPostfix = []
 
+let result = 0
+
 // need more info to do this :(
 
 function zero() {
     operationStackInfix.push(0)
     updateDisplay()
-    console.log(operationStackInfix)
 }
 
 function one() {
@@ -97,6 +98,7 @@ function go() {
     // 1.2 create regex to split by operators, update infix stack
     var expr = new RegExp("(?<=[-+x%])|(?=[-+x%])")  
     operationStackInfix = displayText.split(expr)
+    console.log(operationStackInfix)
     
     // 1.2.1 fix condition where number preceded by + or -, which 
     // ...is either itself preceded by x or %. eg. 2x-2
@@ -193,7 +195,7 @@ function go() {
         } else {
 
             let tempOperator = ""
-            let num1, num2, result
+            let num1, num2
 
             while (true) {
 
@@ -273,7 +275,7 @@ function go() {
     console.log("result: " + operationStackPostfix)
 
     operationStackInfix = []
-    operationStackInfix.push(result)
+    operationStackInfix.push(operationStackPostfix[0])
 
     operationStackPostfix.pop()
 

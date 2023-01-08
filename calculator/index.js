@@ -97,6 +97,60 @@ function go() {
     // 1.2 create regex to split by operators, update infix stack
     var expr = new RegExp("(?<=[-+x%])|(?=[-+x%])")  
     operationStackInfix = displayText.split(expr)
+    
+    // 1.2.1 fix condition where number preceded by + or -, which 
+    // ...is either itself preceded by x or %. eg. 2x-2
+    // ...or is the first element in the expn
+
+    let tempOperationStackInfix = []
+    let newEl
+
+    // 1.2.1.1 for first element being + or -
+    if ("-+".includes(operationStackInfix[0])) {
+
+        newEl = operationStackInfix[0] + operationStackInfix[1]
+        tempOperationStackInfix.push(newEl)
+
+        for (let i = 2; i < operationStackInfix.length; i++) {
+
+            tempOperationStackInfix.push(operationStackInfix[i])
+
+        }
+        operationStackInfix = tempOperationStackInfix
+        tempOperationStackInfix = []
+    }
+
+    // 1.2.1.2 if preceded by x or %
+
+    for (let i = 1; i < operationStackInfix.length; i++) {
+
+        if ("-+".includes(operationStackInfix[i]) 
+        && "x%".includes(operationStackInfix[i - 1])) {
+
+            newEl = operationStackInfix[i] + operationStackInfix[i + 1]
+
+            for (let j = 0; j < operationStackInfix.length; j++) {
+
+                if (i === j) {
+                    tempOperationStackInfix.push(newEl)
+                    
+                } else if (j === i + 1) {
+                    continue
+
+                } else {    
+
+                    tempOperationStackInfix.push(operationStackInfix[j])
+
+                }
+
+            }
+            operationStackInfix = tempOperationStackInfix
+            tempOperationStackInfix = []
+
+        }
+
+    }
+
     console.log(operationStackInfix)
 
     // 1.3 convert all type string numbers to type number numbers
@@ -138,45 +192,41 @@ function go() {
         // 3.1 ...else, add to operators stack/evaluate
         } else {
 
-            // 3.1.2 if currentEl is first operator to go on stack
-            if (tempOperatorsStack.length === 0) {
-                tempOperatorsStack[0] = currentEl
+            let tempOperator = ""
+            let num1, num2, result
 
-            // 3.1.2 else    
-            } else {
+            while (true) {
 
-                let tempOperator = ""
-                let num1, num2, result
-
-                while (true) {
-
-                    prevOperator = tempOperatorsStack[tempOperatorsStack.length - 1]
-                    if (precedenceDict[currentEl] > precedenceDict[prevOperator]) {
-                        tempOperatorsStack.push(currentEl)
-                        break
-                    } 
-
-                    tempOperator = tempOperatorsStack.pop()
-
-                    // pop last two numbers, operate on them using tempOperator,
-                    num1 = operationStackPostfix.pop()
-                    num2 = operationStackPostfix.pop()
-
-                    if (tempOperator === "+") {
-                        result = num2 + num1
-                    } else if (tempOperator === "-") {
-                        result = num2 - num1
-                    } else if (tempOperator === "x") {
-                        result = num2 * num1
-                    } else if (tempOperator === "%") {
-                        result = num2 / num1
-                    }
-
-                    // push result onto postfix stack
-                    operationStackPostfix.push(result)
-                    
+                if (tempOperatorsStack.length === 0) {
+                    tempOperatorsStack.push(currentEl)
+                    break 
                 }
 
+                prevOperator = tempOperatorsStack[tempOperatorsStack.length - 1]
+                if (precedenceDict[currentEl] > precedenceDict[prevOperator]) {
+                    tempOperatorsStack.push(currentEl)
+                    break
+                } 
+
+                tempOperator = tempOperatorsStack.pop()
+
+                // pop last two numbers, operate on them using tempOperator,
+                num1 = operationStackPostfix.pop()
+                num2 = operationStackPostfix.pop()
+
+                if (tempOperator === "+") {
+                    result = num2 + num1
+                } else if (tempOperator === "-") {
+                    result = num2 - num1
+                } else if (tempOperator === "x") {
+                    result = num2 * num1
+                } else if (tempOperator === "%") {
+                    result = num2 / num1
+                }
+
+                // push result onto postfix stack
+                operationStackPostfix.push(result)
+                
             }
 
         }
@@ -188,30 +238,44 @@ function go() {
 
     // for remaining operators in tempOp stack
 
-    for (let i = 0; i < tempOperatorsStack.length; i++) {
+    if (tempOperatorsStack.length !== 0) {
 
-        tempOperator = tempOperatorsStack.pop()
+        let operationsLeft = tempOperatorsStack.length
 
-        // pop last two numbers, operate on them using tempOperator,
-        num1 = operationStackPostfix.pop()
-        num2 = operationStackPostfix.pop()
+        for (let i = 0; i < operationsLeft; i++) {
 
-        if (tempOperator === "+") {
-            result = num2 + num1
-        } else if (tempOperator === "-") {
-            result = num2 - num1
-        } else if (tempOperator === "x") {
-            result = num2 * num1
-        } else if (tempOperator === "%") {
-            result = num2 / num1
+            tempOperator = tempOperatorsStack.pop()
+
+            // pop last two numbers, operate on them using tempOperator,
+            num1 = operationStackPostfix.pop()
+            num2 = operationStackPostfix.pop()
+
+            console.log(num1, num2)
+
+            if (tempOperator === "+") {
+                result = num2 + num1
+            } else if (tempOperator === "-") {
+                result = num2 - num1
+            } else if (tempOperator === "x") {
+                result = num2 * num1
+            } else if (tempOperator === "%") {
+                result = num2 / num1
+            }
+
+            // push result onto postfix stack
+            operationStackPostfix.push(result)
+
         }
-
-        // push result onto postfix stack
-        operationStackPostfix.push(result)
 
     }
 
+    updateDisplay()
     console.log("result: " + operationStackPostfix)
+
+    operationStackInfix = []
+    operationStackInfix.push(result)
+
+    operationStackPostfix.pop()
 
 }    
 
@@ -230,6 +294,11 @@ function updateDisplay() {
 
         displayText = ""
 
+    }
+
+    if (operationStackPostfix.length === 1) {
+
+        displayText = operationStackPostfix[0].toString()
     }
     
     document.getElementById("display").innerText = displayText

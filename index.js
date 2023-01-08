@@ -275,9 +275,20 @@ function go() {
     console.log("result: " + operationStackPostfix)
 
     operationStackInfix = []
-    operationStackInfix.push(operationStackPostfix[0])
 
-    operationStackPostfix.pop()
+    operationStackInfix.push(operationStackPostfix[0])
+    
+    operationStackPostfix.forEach((el) => {
+
+        if (isNaN(el)) {
+    
+            operationStackInfix = []
+    
+        }
+
+    });
+
+    operationStackPostfix = []
 
 }    
 
@@ -298,10 +309,30 @@ function updateDisplay() {
 
     }
 
-    if (operationStackPostfix.length === 1) {
+    if (operationStackPostfix.length > 0) {
 
         displayText = operationStackPostfix[0].toString()
+        operationStackPostfix.forEach((el) => {
+
+            if (isNaN(el)) {
+        
+                displayText = "Type a valid expression!"
+        
+            }
+
+        });
+
     }
     
     document.getElementById("display").innerText = displayText
 }
+
+function throwError() {
+
+    
+
+}
+
+// TODO: 
+// 1. throw error message when NaN/any other error comes up
+

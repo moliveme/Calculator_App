@@ -18,24 +18,27 @@ button {
 }
 
 #btn-hover:hover {
-    background-color: rgb(164, 111, 111);
-    border-color: rgb(150, 113, 113);
+    background-color: rgb(179, 160, 160);
 }
 
 #enter-btn {
-    background-color: rgb(131, 255, 127);
+    background-color: rgb(216, 137, 123);
 }
 
 #enter-btn:hover {
-    background-color: rgb(113, 153, 109);
+    background-color: rgb(179, 160, 160);
 }
 
 #delete-btn {
-    background-color: rgb(211, 66, 66);
+    background-color: rgb(216, 137, 123);
 }
 
 #delete-btn:hover {
-    background-color: rgb(168, 80, 80);
+    background-color: rgb(179, 160, 160);
+}
+
+.operator-btn {
+    background-color: rgb(225, 151, 135)
 }
 
 #display {

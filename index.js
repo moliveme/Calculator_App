@@ -307,7 +307,7 @@ function updateDisplay() {
      
     if (operationStackInfix.length > 0) {
 
-        displayText = operationStackInfix.reduce((a, b) => (a + " " + b + " "))
+        displayText = operationStackInfix.reduce((a, b) => (a + "" + b))
 
     } else {
 

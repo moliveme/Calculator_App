@@ -12,6 +12,8 @@ button {
     color: rgb(72, 65, 65);
     width: 400px;
     font-size: xx-large;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
     border-width: 0px;
     margin-bottom: 25px;
     margin-left: 10px;
@@ -54,5 +56,6 @@ button {
     height: 150px;
     overflow: auto;
     font-size: xx-large;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 420;
 }

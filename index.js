@@ -276,7 +276,13 @@ function go() {
 
     operationStackInfix = []
 
-    operationStackInfix.push(operationStackPostfix[0])
+    if (operationStackPostfix[0] === -Infinity || operationStackPostfix[0] === Infinity) {
+
+        console.log("infinity")
+
+    } else {
+        operationStackInfix.push(operationStackPostfix[0])
+    }
 
     operationStackPostfix.forEach((el) => {
 
@@ -312,6 +318,7 @@ function updateDisplay() {
     if (operationStackPostfix.length > 0) {
 
         displayText = operationStackPostfix[0].toString()
+
         operationStackPostfix.forEach((el) => {
 
             if (isNaN(el)) {
@@ -332,7 +339,4 @@ function throwError() {
     
 
 }
-
-// TODO: 
-// 1. throw error message when NaN/any other error comes up
 

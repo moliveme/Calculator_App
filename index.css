@@ -49,8 +49,9 @@ button {
     border-radius: 10px;
     padding: 20px 30px;
     background-color: antiquewhite;
-    width: 90%;
-    height: 50px;
+    width: 100%;
+    box-sizing: border-box; /* so width takes padding into account*/
+    height: 150px;
     overflow: auto;
     font-size: xx-large;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;

@@ -334,9 +334,9 @@ function updateDisplay() {
     document.getElementById("display").innerText = displayText
 }
 
-function throwError() {
-
-    
-
-}
+// TODO
+// make delete delete only one char, not entire element
+// add AC and . buttons
+// add support for brackets
+// 
 
